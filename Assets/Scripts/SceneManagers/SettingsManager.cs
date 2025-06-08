@@ -16,8 +16,11 @@ public class SettingsManager : MonoBehaviour
 
     private void Awake()
     {
+        _playerNameText.text = PersistentDataManager.GetUserSettings().UserName;
+
         _playerNameText.onValueChanged.AddListener((string name) => { 
             PersistentDataManager.GetUserSettings().UserName = name;
+            PersistentDataManager.SaveUserSettings();
         });
 
         _returnToGameButton.onClick.AddListener(() =>

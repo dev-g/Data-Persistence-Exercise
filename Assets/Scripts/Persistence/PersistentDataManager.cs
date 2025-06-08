@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class PersistentDataManager : MonoBehaviour
 {
-    public class UserSettings
-    {
-        private const string UNSET_NAME = "UNSET";
-        public string UserName = UNSET_NAME;
-    }
-
     private static PersistentDataManager INSTANCE;
-    private UserSettings _userSettings;
-    private HighScores _highScores;
 
+    private UserSettings _userSettings;
+    private UserSettingsPersistence _userSettingsPersistence;
+
+    private HighScores _highScores;
     private HighScoresPersistence _highScoresPersistence;
+
+    public static HighScores HighScores => (INSTANCE != null) ? INSTANCE._highScores : null;
 
 
     private void Awake()
@@ -22,7 +20,9 @@ public class PersistentDataManager : MonoBehaviour
             INSTANCE = this;
             DontDestroyOnLoad(gameObject);
 
-            _userSettings = new();
+            _userSettingsPersistence = new(Application.persistentDataPath);
+            _userSettings = _userSettingsPersistence.Load();
+
             _highScoresPersistence = new(Application.persistentDataPath);
             _highScores = _highScoresPersistence.Load();
         }
@@ -53,6 +53,11 @@ public class PersistentDataManager : MonoBehaviour
         }
     }
 
-    public static HighScores HighScores => (INSTANCE != null) ? INSTANCE._highScores : null;
-
+    public static void SaveUserSettings()
+    {
+        if (INSTANCE != null)
+        {
+            INSTANCE._userSettingsPersistence.Save(INSTANCE._userSettings);
+        }
+    }
 }
