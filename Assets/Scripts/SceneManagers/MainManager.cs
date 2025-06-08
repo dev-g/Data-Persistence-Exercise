@@ -85,6 +85,7 @@ public class MainManager : MonoBehaviour
         }
 
         _settingsButton.gameObject.SetActive(!m_Started || m_GameOver);
+        _highScoresButton.gameObject.SetActive(!m_Started || m_GameOver);
         _userNameText.text = $"Playing as: {PersistentDataManager.GetUserSettings().UserName}";
     }
 
