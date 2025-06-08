@@ -16,10 +16,13 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
 
     [SerializeField]
-    private Button SettingsButton;
+    private Button _settingsButton;
 
     [SerializeField]
-    private Text UserNameText;
+    private Button _highScoresButton;
+
+    [SerializeField]
+    private Text _userNameText;
 
 
     private bool m_Started = false;
@@ -46,8 +49,13 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        SettingsButton.onClick.AddListener(() => {
+        _settingsButton.onClick.AddListener(() => {
             SceneManager.LoadScene("Settings");
+        });
+
+        _highScoresButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("High Scores");
         });
 
         UpdateBestScore();
@@ -76,8 +84,8 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        SettingsButton.gameObject.SetActive(!m_Started || m_GameOver);
-        UserNameText.text = $"Playing as: {PersistentDataManager.GetUserSettings().UserName}";
+        _settingsButton.gameObject.SetActive(!m_Started || m_GameOver);
+        _userNameText.text = $"Playing as: {PersistentDataManager.GetUserSettings().UserName}";
     }
 
     void AddPoint(int point)
@@ -96,9 +104,11 @@ public class MainManager : MonoBehaviour
 
     private void UpdateBestScore()
     {
-        PlayerScore highScore = PersistentDataManager.HighScores.Scores.First();
-        if (highScore != null)
+        var scores = PersistentDataManager.HighScores.Scores;
+        
+        if (scores.Count > 0)
         {
+            PlayerScore highScore = scores.First();
             BestScoreText.text = $"Best Score: {highScore.Name} : {highScore.Score}";
         }
     }

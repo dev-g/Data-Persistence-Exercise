@@ -12,6 +12,9 @@ public class SettingsManager : MonoBehaviour
     private Button _returnToGameButton;
 
     [SerializeField]
+    private Button _highScoresButton;
+
+    [SerializeField]
     private Button _quitButton;
 
     private void Awake()
@@ -25,7 +28,12 @@ public class SettingsManager : MonoBehaviour
 
         _returnToGameButton.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene("main", LoadSceneMode.Single);
+            SceneManager.LoadScene("main");
+        });
+
+        _highScoresButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("High Scores");
         });
 
         _quitButton.onClick.AddListener(() =>
