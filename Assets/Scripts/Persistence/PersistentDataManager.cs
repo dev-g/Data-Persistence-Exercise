@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DataPersistence : MonoBehaviour
+public class PersistentDataManager : MonoBehaviour
 {
     public class UserSettings
     {
@@ -8,7 +8,7 @@ public class DataPersistence : MonoBehaviour
         public string UserName = UNSET_NAME;
     }
 
-    private static DataPersistence INSTANCE;
+    private static PersistentDataManager INSTANCE;
     private UserSettings _userSettings;
     private HighScores _highScores;
 
